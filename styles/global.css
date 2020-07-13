@@ -1,0 +1,191 @@
+html,
+body {
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+.colBox {
+    width: calc(100% / 6);
+    height: 15vh;
+    transition: 0.3s
+  }
+
+.colorRow {
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+  .colBoxMini {
+      width: 40px;
+      height: 40px;
+  }
+  
+  .colBoxMini + div {
+    margin-left: 10px;
+  }
+  
+  .colCon {
+    text-align: center;
+    width:100%;
+    display: flex;
+    padding:0;
+    margin:0;
+  }
+  
+  .palCon {
+    margin-left: 30px;
+    width: 80%;
+    /* margin:auto; */
+  }
+  
+  #oneCon {
+    height:65vh;
+  }
+  
+  #theOne {
+    height:100%;
+    min-width:100%;
+    max-width: 100%;
+    object-fit: cover;
+  }
+
+  .btnCont{
+      display: flex;
+      flex-direction: row;
+  }
+
+  .regenBtn {
+    transition: 0.3s;
+      background: black;
+      color: white;
+      border: 1px solid black;
+      font-size: 1.8em;
+      padding: 0.4em;
+      display: block;
+      width: fit-content;
+  }
+
+  .regenBtn:focus {
+    outline: 0
+  }
+
+  .regenBtn:hover {
+      transition: 0.3s;
+      border: thin solid black;
+      color: black;
+      background: white;
+      
+  }
+
+  .regenBtn:disabled {
+    transition: 0.3s;
+    border: thin solid gray;
+    color: gray;
+    background: white;
+  }
+  
+  span:hover {
+      background: black;
+      color:white;
+  }
+
+  #container {
+    min-height: 10px;
+    margin: 0;
+    margin-top: 10px;
+  }
+
+  #bannerImg {
+      width: 100px;
+      height: 100px;
+  }
+
+  label {
+      margin-left: 10px;
+        transition: 0.3s;
+      background: black;
+      color: white;
+      border: 1px solid black;
+      font-size: 1.8em;
+      padding: 0.4em;
+      display: block;
+      width: fit-content;
+  }
+
+  label:hover {
+    margin-left: 10px;
+    transition: 0.3s;
+    border: thin solid black;
+    color: black;
+    background: white;
+  }
+
+  input[type="file"] {
+    display: none;
+}
+
+.container {
+    min-height: 100vh;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .main-text {
+    /* flex: 1;  */
+  }
+
+  .title {
+    margin: 0;
+    line-height: 1.15;
+    font-size: 4rem;
+  }
+
+  .description {
+    line-height: 1.5;
+    font-size: 1.5rem;
+  }
+
+  .colorRegion {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+  }
+
+@media (max-width: 774px) {
+    .container {
+        padding: 0;
+    }
+
+    main {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-text {
+        padding: 1em;
+    }
+
+    .palCon {
+        margin:0;
+        width: 100%;
+    }
+  }

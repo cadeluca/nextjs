@@ -1,203 +1,157 @@
 import Head from 'next/head'
+import { Palette } from 'react-palette';
+import React, {useState} from 'react'
+var ProgressBar = require('progressbar.js')
 
-const Home = () => (
-  <div className="container">
+export default function Home({ photo }) {
+  const [pho, setPho] = useState(photo);
+
+  function readURL() {
+    const file = document.querySelector('input[type=file]').files[0];
+    const reader = new FileReader();
+
+    if (file) {
+      reader.onloadend = () => {
+        const image = reader.result;
+        // console.log(image);
+        setPho(image);
+      }
+      reader.readAsDataURL(file);
+    }
+
+    const inp = document.querySelector('input[type=file]');
+    inp.value = '';
+  }
+
+  function getPhoto() {
+    buttonLimiter();
+    fetch(`https://source.unsplash.com/random/1280x720?sig=${Math.random()}`)
+    .then((data) => {
+      addBar();
+      setPho(data.url)
+  })
+  }
+
+  function buttonLimiter() {
+    const btn = document.getElementById("mainbtn");
+    btn.disabled = true;
+    setTimeout(function() {
+      btn.disabled = false;
+    }, 5000)
+
+  }
+
+  function addBar() {
+    var bar = new ProgressBar.Line('#container', {
+      from: {color: '#000000'},
+      to: {color: '#FFFFFF'},
+      duration: 5000,
+      // easing: 'easeIn', //easeInOut
+      step: (state, bar) => {
+        bar.path.setAttribute('stroke', state.color);
+      }
+  });
+    bar.set(1.0);
+    bar.animate(0.0, () => bar.destroy()) // Value from 0.0 to 1.0
+  }
+
+  function copyColorToClipboard(e) {
+    // console.log(e.target.innerHTML)
+    var color = e.target.innerHTML;
+    navigator.clipboard.writeText(color)
+  };
+
+  function openImg(e) {
+    var url = e.target.src;
+    if (!url.includes('data:image/')) {
+      window.open(url, '_blank')
+    } else {
+      console.log('will not open base64 image in new tab')
+    }
+  }
+
+  return (
+    <div className="container">
     <Head>
-      <title>Create Next App</title>
+      <title>tavolozza</title>
       <link rel="icon" href="/favicon.ico" />
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </Head>
-
-    <main>
-      <h1 className="title">
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
-      </h1>
-
-      <p className="description">
-        Get started by editing <code>pages/index.js</code>
-      </p>
-
-      <div className="grid">
-        <a href="https://nextjs.org/docs" className="card">
-          <h3>Documentation &rarr;</h3>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a href="https://nextjs.org/learn" className="card">
-          <h3>Learn &rarr;</h3>
-          <p>Learn about Next.js in an interactive course with quizzes!</p>
-        </a>
-
-        <a
-          href="https://github.com/zeit/next.js/tree/master/examples"
-          className="card"
-        >
-          <h3>Examples &rarr;</h3>
-          <p>Discover and deploy boilerplate example Next.js projects.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className="card"
-        >
-          <h3>Deploy &rarr;</h3>
-          <p>
-            Instantly deploy your Next.js site to a public URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-
-    <footer>
-      <a
-        href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by <img src="/vercel.svg" alt="Vercel Logo" />
-      </a>
-    </footer>
-
-    <style jsx>{`
-      .container {
-        min-height: 100vh;
-        padding: 0 0.5rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      main {
-        padding: 5rem 0;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      footer {
-        width: 100%;
-        height: 100px;
-        border-top: 1px solid #eaeaea;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      footer img {
-        margin-left: 0.5rem;
-      }
-
-      footer a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .title a {
-        color: #0070f3;
-        text-decoration: none;
-      }
-
-      .title a:hover,
-      .title a:focus,
-      .title a:active {
-        text-decoration: underline;
-      }
-
-      .title {
-        margin: 0;
-        line-height: 1.15;
-        font-size: 4rem;
-      }
-
-      .title,
-      .description {
-        text-align: center;
-      }
-
-      .description {
-        line-height: 1.5;
-        font-size: 1.5rem;
-      }
-
-      code {
-        background: #fafafa;
-        border-radius: 5px;
-        padding: 0.75rem;
-        font-size: 1.1rem;
-        font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-      }
-
-      .grid {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-
-        max-width: 800px;
-        margin-top: 3rem;
-      }
-
-      .card {
-        margin: 1rem;
-        flex-basis: 45%;
-        padding: 1.5rem;
-        text-align: left;
-        color: inherit;
-        text-decoration: none;
-        border: 1px solid #eaeaea;
-        border-radius: 10px;
-        transition: color 0.15s ease, border-color 0.15s ease;
-      }
-
-      .card:hover,
-      .card:focus,
-      .card:active {
-        color: #0070f3;
-        border-color: #0070f3;
-      }
-
-      .card h3 {
-        margin: 0 0 1rem 0;
-        font-size: 1.5rem;
-      }
-
-      .card p {
-        margin: 0;
-        font-size: 1.25rem;
-        line-height: 1.5;
-      }
-
-      @media (max-width: 600px) {
-        .grid {
-          width: 100%;
-          flex-direction: column;
-        }
-      }
-    `}</style>
-
-    <style jsx global>{`
-      html,
-      body {
-        padding: 0;
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-          Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-    `}</style>
+    <Palette src={pho}>
+      {({ data }) => (
+        <main>
+          <div className="main-text">
+            <h1 className="title">
+              tavolozza
+            </h1>
+            <p className="description">
+              palette generator using unsplash. <br></br>click a hex code to copy color to your clipboard.
+            </p>
+            <div className="btnCont"> 
+            <button id="mainbtn" className="regenBtn" onClick={getPhoto}>regenerate</button>
+            <label htmlFor="uploadBannerImage" className="custom-file-upload">upload</label>
+              <input type='file' id="uploadBannerImage" onChange={() => readURL(event)} />
+            </div>
+            <div id="container"></div>
+            <div className="colorRegion">
+              <div className="colorRow">
+                <div className="colBoxMini" style={{ background: data.lightVibrant }}/><div>
+                  <span onClick={copyColorToClipboard}>{data.lightVibrant}</span> / light vibrant
+                </div>
+              </div>
+              <div className="colorRow">
+                <div className="colBoxMini" style={{ background: data.vibrant }}/><div>
+                <span onClick={copyColorToClipboard}>{data.vibrant}</span> / vibrant
+                </div>
+              </div>
+              <div className="colorRow">
+                <div className="colBoxMini" style={{ background: data.darkVibrant }}/><div>
+                <span onClick={copyColorToClipboard}>{data.darkVibrant}</span> / dark vibrant
+                </div>
+              </div>
+              <div className="colorRow">
+                <div className="colBoxMini" style={{ background: data.lightMuted }}/><div>
+                <span onClick={copyColorToClipboard}>{data.lightMuted}</span> / light muted
+                </div>
+              </div>
+              <div className="colorRow">
+                <div className="colBoxMini" style={{ background: data.muted }}/><div>
+                <span onClick={copyColorToClipboard}>{data.muted}</span> / muted
+                </div>
+              </div>
+              <div className="colorRow">
+                <div className="colBoxMini" style={{ background: data.darkMuted }}/><div>
+                <span onClick={copyColorToClipboard}>{data.darkMuted}</span> / dark muted
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="palCon">
+            <div id="oneCon">
+              <img id="theOne" src={pho} onClick={openImg}></img>
+            </div>
+            <div className="colCon">
+              <div className="colBox" style={{ background: data.lightVibrant }}/>
+              <div className="colBox" style={{ background: data.vibrant }}/>
+              <div className="colBox" style={{ background: data.darkVibrant }}/>
+              <div className="colBox" style={{ background: data.lightMuted }}/>
+              <div className="colBox" style={{ background: data.muted }}/>
+              <div className="colBox" style={{ background: data.darkMuted }}/>
+            </div>
+          </div>
+        </main>
+      )}
+    </Palette>
   </div>
-)
+  )
+}
 
-export default Home
+export async function getStaticProps() {
+  const photo = await fetch("https://source.unsplash.com/random/1280x720")
+    .then((data) => { return data.url });
+  return {
+    props: {
+      photo
+    }
+  }
+}
