@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { Palette } from 'react-palette';
 import React, {useState} from 'react'
+import Logo from '../components/logo';
 var ProgressBar = require('progressbar.js')
 
 export default function Home({ photo }) {
@@ -73,17 +74,21 @@ export default function Home({ photo }) {
   return (
     <div className="container">
     <Head>
-      <title>tavolozza</title>
+      <title>tavolozza</title> {/*swatches*/}
       <link rel="icon" href="/favicon.ico" />
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      {/* <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> */}
     </Head>
     <Palette src={pho}>
       {({ data }) => (
         <main>
           <div className="main-text">
+            <header>
+            <Logo></Logo>
             <h1 className="title">
               tavolozza
             </h1>
+            </header>
+  
             <p className="description">
               palette generator using unsplash. <br></br>click a hex code to copy color to your clipboard.
             </p>
@@ -142,6 +147,16 @@ export default function Home({ photo }) {
         </main>
       )}
     </Palette>
+    {/* <footer>
+      <img src="GitHub-Mark-64px.png"></img>
+    </footer> */}
+    {/* <div id="stripes">
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+  <span></span>
+</div> */}
   </div>
   )
 }
