@@ -186,7 +186,7 @@ main {
     display: flex;
     flex-direction: column;
   }
-
+/* 
 #stripes span:nth-child(1) {
   grid-column: span 1;
   background: var(--first);
@@ -239,7 +239,7 @@ main {
     transform: skewY(40deg);
     /* transform: skewX(10deg) */
     transform-origin: top;
-  }
+  } */
 
   .logoGrid {
     display: grid;
