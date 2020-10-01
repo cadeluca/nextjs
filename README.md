@@ -1,3 +1,11 @@
+
+# Tavolozza
+
+Tavolozza (palette in english) is a small app to generate color palettes using images from Unsplash or uploaded by the user. The image can be randomly reloaded and hex codes of the palette are copied on click. The palette is composed of Light, standard, and Dark variants of vibrant and muted colors. 
+
+Revisions to this app are planned to clean up stray/junk code and polish it in general. 
+
+Find the original README info below.
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
