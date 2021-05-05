@@ -2,11 +2,13 @@ import Head from 'next/head'
 import { useState } from 'react'
 import Logo from '../components/Logo';
 import MyPalette from '../components/MyPalette';
-
+import ImagePalette from '../components/ImagePalette';
+import { usePalette } from 'react-palette';
 var ProgressBar = require('progressbar.js')
 
 export default function Home({ photo }) {
-	const [pho, setPho] = useState(photo);
+	const [image, setImage] = useState(photo);
+	const { data, loading, error } = usePalette(image);
 
 	function readURL() {
 		const file = document.querySelector('input[type=file]').files[0];
@@ -15,8 +17,7 @@ export default function Home({ photo }) {
 		if (file) {
 			reader.onloadend = () => {
 				const image = reader.result;
-				// console.log(image);
-				setPho(image);
+				setImage(image);
 			}
 			reader.readAsDataURL(file);
 		}
@@ -30,7 +31,7 @@ export default function Home({ photo }) {
 		fetch(`https://source.unsplash.com/random/1280x720?sig=${Math.random()}`)
 			.then((data) => {
 				addBar();
-				setPho(data.url)
+				setImage(data.url)
 			})
 	}
 
@@ -70,6 +71,7 @@ export default function Home({ photo }) {
 						<h1 className="title">
 							tavolozza
             </h1>
+						<div id="container"></div>
 					</header>
 					<p className="description">
 						palette generator using unsplash. <br></br>click a hex code to copy color to your clipboard.
@@ -80,7 +82,8 @@ export default function Home({ photo }) {
 						<input type='file' id="uploadBannerImage" onChange={() => readURL(event)} />
 					</div>
 				</div>
-				<MyPalette image={pho}></MyPalette>
+				<MyPalette data={data}></MyPalette>
+				<ImagePalette image={image} data={data}></ImagePalette>
 			</main>
 		</div>
 	)
