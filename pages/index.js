@@ -7,8 +7,8 @@ import { usePalette } from 'react-palette';
 import { unsplash } from '../lib/unsplash';
 
 export default function Home({ photo }) {
-	const [image, setImage] = useState(photo);
-	const { data, loading, error } = usePalette(image);
+	const [image, setImage] = useState({});
+	// const { data, loading, error } = usePalette(image);
 
 	function readURL() {
 		const file = document.querySelector('input[type=file]').files[0];
@@ -70,24 +70,24 @@ export default function Home({ photo }) {
 						<input type='file' id="uploadBannerImage" onChange={() => readURL(event)} />
 					</div>
 				</div>
-				<MyPalette data={data}></MyPalette>
-				<ImagePalette image={image} data={data}></ImagePalette>
+				{/* <MyPalette data={data}></MyPalette> */}
+				{/* <ImagePalette image={image} data={data}></ImagePalette> */}
 			</main>
 		</div>
 	)
 }
 
-export async function getStaticProps() {
-	// const photoData = await fetch("https://source.unsplash.com/random/1280x720");
-	// const photo = photoData.url;
-	let foo = await unsplash.photos.getRandom({});
+// export async function getStaticProps() {
+// 	// const photoData = await fetch("https://source.unsplash.com/random/1280x720");
+// 	// const photo = photoData.url;
+// 	let foo = await unsplash.photos.getRandom({});
 
-	let photo = foo.response.urls.raw;
+// 	let photo = foo.response.urls.raw;
 
-	console.log(foo);
-	return {
-		props: {
-			photo
-		}
-	}
-}
+// 	console.log(foo);
+// 	return {
+// 		props: {
+// 			photo
+// 		}
+// 	}
+// }
