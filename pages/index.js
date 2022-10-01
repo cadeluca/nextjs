@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { useState } from 'react'
-import Logo from '../components/Logo';
+import Logo from '../components/logo';
 import MyPalette from '../components/MyPalette';
 import ImagePalette from '../components/ImagePalette';
 import { usePalette } from 'react-palette';
