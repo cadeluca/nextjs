@@ -4,7 +4,7 @@ import Logo from '../components/Logo';
 import MyPalette from '../components/MyPalette';
 import ImagePalette from '../components/ImagePalette';
 import { usePalette } from 'react-palette';
-var ProgressBar = require('progressbar.js')
+import { unsplash } from '../lib/unsplash';
 
 export default function Home({ photo }) {
 	const [image, setImage] = useState(photo);
@@ -26,37 +26,23 @@ export default function Home({ photo }) {
 		inp.value = '';
 	}
 
-	function getPhoto() {
-		buttonLimiter();
-		fetch(`https://source.unsplash.com/random/1280x720?sig=${Math.random()}`)
-			.then((data) => {
-				addBar();
-				setImage(data.url)
-			})
-	}
+	// function getPhoto() {
+	// 	buttonLimiter();
+	// 	fetch(`https://source.unsplash.com/random/1280x720?sig=${Math.random()}`)
+	// 		.then((data) => {
+	// 			// addBar();
+	// 			setImage(data.url)
+	// 		})
+	// }
 
-	function buttonLimiter() {
-		const btn = document.getElementById("mainbtn");
-		btn.disabled = true;
-		setTimeout(function () {
-			btn.disabled = false;
-		}, 5000)
+	// function buttonLimiter() {
+	// 	const btn = document.getElementById("mainbtn");
+	// 	btn.disabled = true;
+	// 	setTimeout(function () {
+	// 		btn.disabled = false;
+	// 	}, 5000)
 
-	}
-
-	function addBar() {
-		var bar = new ProgressBar.Line('#container', {
-			from: { color: '#000000' },
-			to: { color: '#FFFFFF' },
-			duration: 5000,
-			// easing: 'easeIn', //easeInOut
-			step: (state, bar) => {
-				bar.path.setAttribute('stroke', state.color);
-			}
-		});
-		bar.set(1.0);
-		bar.animate(0.0, () => bar.destroy()) // Value from 0.0 to 1.0
-	}
+	// }
 
 	return (
 		<div className="container">
@@ -77,7 +63,9 @@ export default function Home({ photo }) {
 						palette generator using unsplash. <br></br>click a hex code to copy color to your clipboard.
           </p>
 					<div className="btnCont">
-						<button id="mainbtn" className="regenBtn" onClick={getPhoto}>regenerate</button>
+						<button id="mainbtn" className="regenBtn" 
+						// onClick={getPhoto}
+						>regenerate</button>
 						<label htmlFor="uploadBannerImage" className="custom-file-upload">upload</label>
 						<input type='file' id="uploadBannerImage" onChange={() => readURL(event)} />
 					</div>
@@ -90,9 +78,13 @@ export default function Home({ photo }) {
 }
 
 export async function getStaticProps() {
-	const photoData = await fetch("https://source.unsplash.com/random/1280x720");
-	const photo = photoData.url;
+	// const photoData = await fetch("https://source.unsplash.com/random/1280x720");
+	// const photo = photoData.url;
+	let foo = await unsplash.photos.getRandom({});
 
+	let photo = foo.response.urls.raw;
+
+	console.log(foo);
 	return {
 		props: {
 			photo
